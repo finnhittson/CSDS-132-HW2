@@ -1,0 +1,131 @@
+import java.lang.Character; 
+public class HW2 {
+	
+  //capitalizes first letter in each sentence
+	public static String capitalizeSentences(String string) {
+		StringBuilder sb = new StringBuilder();
+		boolean caps = true;
+		for (int i = 0; i < string.length(); i++) {
+			if (Character.isLetter(string.charAt(i)) && caps) {
+				sb.append(Character.toUpperCase(string.charAt(i)));
+				caps = false;
+			}
+			else if (!Character.isLetter(string.charAt(i)) && string.charAt(i) != '-') {
+				caps = true;
+				sb.append(string.charAt(i));
+			}
+			else
+				sb.append(string.charAt(i));
+		}
+		System.out.println(sb.toString());
+		return sb.toString();
+	}
+	
+  //returns true if sequence is in sentence
+	public static boolean subSequence(String sub, String string) {
+		int j = 0;
+		for (int i = 0; i < string.length() && j < sub.length(); i++) {
+			if (string.charAt(i) == sub.charAt(j))
+				j++;
+		}
+		System.out.println(j == sub.length());
+		return j == sub.length();
+	}
+	
+	public static String indexWord(String string, String number) {
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < number.length(); i++)
+			sb.append(string.charAt(Integer.parseInt(Character.toString(number.charAt(i)))));
+		System.out.println(sb.toString());
+		return sb.toString();
+	}
+  
+  //removes extra spaces in sentence. needs additional loop to remove very last space
+	public static String removeExtraSpaces(String string) {
+		StringBuilder sb = new StringBuilder();
+		boolean spaceFound = true;
+		for (int i = 0; i < string.length(); i++) {
+				if (string.charAt(i) == ' ' && !spaceFound) {
+					spaceFound = true;
+					sb.append(string.charAt(i));
+				}
+				else if (string.charAt(i) != ' ') {
+					sb.append(string.charAt(i));
+					if (i != string.length() - 1 && string.charAt(i + 1) == ' ')
+						spaceFound = false;
+				}
+			}
+		System.out.print(sb.toString());
+		return sb.toString();
+	}
+	
+  //given a number, removes every word of that multiple
+	public static String removeEveryKthWord(String string, int k) {
+		StringBuilder sb = new StringBuilder();
+		int counter = 0;
+		if (k <= 0)
+			return string;
+		if (string.charAt(0) == ' ')
+			counter--;
+		for (int i = 0; i < string.length(); i++) {
+			if (string.charAt(i) == ' ') 
+				counter++; 
+			if (counter + 1 != k)
+				sb.append(string.charAt(i));
+			if (counter == k)
+				counter = 0;
+		}
+		System.out.println(sb.toString());
+		return sb.toString();
+	}
+	
+  //returns true if word is in sentence and false if otherwise
+	public static boolean containsWord(String string, String word) {
+		String st = new String();
+		StringBuilder sb = new StringBuilder();
+		int k = 0;
+		for (int i = 0; i < word.length(); i++) {
+			if (word.charAt(i) != ' ')
+				sb.append(word.charAt(i));
+			if (word.charAt(i) == ' ' || i == word.length() - 1) {
+				st = new String(sb.toString());
+				sb = new StringBuilder();
+				if (st.toString().length() > 0) {
+					for (int j = 0; j < string.length(); j++) {
+						if (st.charAt(k) == string.charAt(j)) {
+							if (k == st.toString().length() - 1) {
+								System.out.println(true);
+								return true;
+							}
+							k++;
+						}
+						else
+							k = 0;
+					}
+				}
+			}
+		}
+		System.out.println(false);
+		return false;
+	}
+	
+	public static void main(String args[]) {
+		//HW2.capitalizeSentences("hello!  what is my number?  341-1212!  WHAT is yours?");
+		//HW2.capitalizeSentences("look!sentence.no-spaces!");
+		
+		//HW2.subSequence("abc", "about chocolate");
+		//HW2.subSequence("abc", "acorn bud");
+		
+		//HW2.indexWord("EHL ORT!.?", "102243610509");
+		
+		//HW2.removeExtraSpaces("  How about     that    ?     ");
+		
+		//HW2.removeEveryKthWord("Four score and seven years ago our fore fathers", 3);
+		//HW2.removeEveryKthWord(" Every Who down in Whoville liked Christmas a lot!", 2);
+		
+		//HW2.containsWord("My what a lovely day", "hate      love");
+		//HW2.containsWord("StopThat!!", "! ? *");
+		//HW2.containsWord("Guess who is coming to dinner?", "Who Dinner");
+		//HW2.containsWord("One last example", "");
+		}
+}
